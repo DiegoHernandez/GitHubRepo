@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="14" />
 
     <permission
         android:name="com.joseluishdz.cupbucks.permission.MAPS_RECEIVE"

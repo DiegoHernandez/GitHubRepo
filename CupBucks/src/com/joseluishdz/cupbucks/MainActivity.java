@@ -29,6 +29,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -51,17 +53,27 @@ public class MainActivity extends Activity {
 	
 	// Google Map
     private GoogleMap googleMap;
+    private Location location;
     
     Calendar ca = Calendar.getInstance();
 	private String dia = Integer.toString(ca.get(Calendar.DATE));
 	private String mes = Integer.toString((ca.get(Calendar.MONTH)+1));
 	private String anio = Integer.toString(ca.get(Calendar.YEAR));
     
+	private ListView listView;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        listView = (ListView) findViewById(R.id.ListView);
+        String[] items = { "Pleace1", "Pleace2", "Pleace3", "Pleace4", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5", "Pleace5" };
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, items);
+        
+        listView.setAdapter(adapter);
         // create class object
         gps = new GPSTracker(MainActivity.this);
 
@@ -69,8 +81,7 @@ public class MainActivity extends Activity {
         if(gps.canGetLocation()){
              
             double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-            
+            double longitude = gps.getLongitude();            
             currentLoc = new LatLng(latitude,longitude);
         }else{
         	alertError("Error de conexion por favor verifique si esta conectado a internet");
@@ -79,15 +90,41 @@ public class MainActivity extends Activity {
         System.out.println("HolaLatitud: " + currentLoc.latitude);
         System.out.println("HolaLong: " + currentLoc.longitude);
         
+         
+        //double []datos=getlocation();
+        //currentLoc = new LatLng(datos[0],datos[1]);
+        
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-              
+         
         // Move the camera instantly to hamburg with a zoom of 15.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
 
-        // Zoom in, animating the camera.
+        // Zoom in, animating the camera. 
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
         
         new getStarbucksStores().execute();
+        
+        //googleMap.setPadding(50, 5, 10, 5);
+        System.out.println("Hola: " + googleMap.getCameraPosition());
+    }
+    
+    public double[] getlocation() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
+
+        Location l = null;
+        for (int i = 0; i < providers.size(); i++) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null)
+                break;
+        }
+        double[] gps = new double[2];
+
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        }
+        return gps;
     }
     
 	@Override
