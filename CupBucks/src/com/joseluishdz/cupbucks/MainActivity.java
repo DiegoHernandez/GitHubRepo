@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.Projection;
 import com.joseluishdz.cupbucks.R;
 
 import Classes.GPSTracker;
@@ -27,6 +28,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -96,6 +99,10 @@ public class MainActivity extends Activity {
         
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
          
+        //googleMap.getUiSettings().setZoomControlsEnabled(false);
+        //googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        //googleMap.moveCamera(CameraUpdateFactory.scrollBy(+100, 0));
+        
         // Move the camera instantly to hamburg with a zoom of 15.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
 
@@ -105,7 +112,16 @@ public class MainActivity extends Activity {
         new getStarbucksStores().execute();
         
         //googleMap.setPadding(50, 5, 10, 5);
-        System.out.println("Hola: " + googleMap.getCameraPosition());
+
+        Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        int height = display.getHeight();
+        
+        System.out.println("HolaPos1: " + googleMap.getCameraPosition());
+        
+        System.out.println("HolaTam: " + width + "," + height);
+        
+        System.out.println("HolaPos2: " + googleMap.getCameraPosition());
     }
     
     public double[] getlocation() {
@@ -230,6 +246,9 @@ public class MainActivity extends Activity {
 					toast.show();
 
 					createMarkers();
+					
+					//googleMap.moveCamera(CameraUpdateFactory.scrollBy(-300, 0));
+					googleMap.animateCamera(CameraUpdateFactory.scrollBy(0, 300), 2000, null);
 	            }else{
 	            	alertError("Ha ocurrido un error al intentar obtener los tiempos");
 	            }
