@@ -1,0 +1,134 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DemoActivity" >
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        sothree:collapsedHeight="68dp" 
+        sothree:shadowHeight="4dp"
+        sothree:dragView="@+id/DragView">
+
+        <ScrollView
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_gravity="center_horizontal"
+		    android:fillViewport="true" >
+		
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical" >
+		
+		       <fragment
+		           android:id="@+id/map"
+		           android:layout_width="match_parent"
+		           android:layout_height="match_parent"
+		           class="com.google.android.gms.maps.MapFragment" />
+		       
+		    </LinearLayout>
+		</ScrollView>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/GhostWhite"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="false">
+		    
+            <FrameLayout
+                android:id="@+id/DragView"
+			    android:layout_width="match_parent"
+			    android:layout_height="50dp" >
+				
+                <LinearLayout
+				    android:id="@+id/LinearLayoutItem"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center|top"
+				    android:background="@color/GhostWhite"
+				    android:orientation="horizontal"
+				    android:paddingBottom="10dp"
+				    android:paddingTop="10dp" >
+			
+					<ImageView
+					    android:id="@+id/ImageViewStore"
+					    android:layout_width="120dp"
+					    android:layout_height="50dp"
+					    android:layout_marginLeft="10dp"
+					    android:layout_weight="1"
+					    android:scaleType="centerCrop"
+					    android:src="@drawable/starbucks_logo" />
+			
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:layout_marginLeft="10dp"
+					    android:layout_marginTop="2dp"
+					    android:orientation="vertical" >
+			
+						<TextView
+						    android:id="@+id/TextViewAddressStore"
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content"
+						    android:layout_marginBottom="5dp"
+						    android:text="Address"
+						    android:textColor="@color/grey4"
+						    android:textSize="16sp"
+						    android:textStyle="normal" />
+			
+						<TextView
+						    android:id="@+id/TextViewDistanceStore"
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content"
+						    android:text="Distance"
+						    android:textColor="@color/grey4"
+						    android:textSize="13sp"
+						    android:textStyle="normal" />
+			
+					</LinearLayout>
+			       
+			   	</LinearLayout>
+                
+                <LinearLayout
+                    android:id="@+id/OverLayout"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:background="@color/green"
+	                android:orientation="horizontal">
+	                
+                    <ImageView
+                        android:id="@+id/DownImage"
+		                android:layout_width="match_parent"
+		                android:layout_height="match_parent" 
+		                android:scaleType="centerInside"
+		                android:src="@drawable/down_icon_white_2" />
+                    
+	            </LinearLayout> 
+			
+			</FrameLayout>
+
+            <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:orientation="vertical" >
+	
+			      	<ListView
+			   		    android:id="@+id/ListViewStores"
+			   		    android:layout_width="match_parent"
+			   		    android:layout_height="match_parent"
+			   		    android:dividerHeight="1dp" >
+	        		</ListView>
+	        </LinearLayout>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</RelativeLayout>
